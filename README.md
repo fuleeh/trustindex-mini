@@ -23,7 +23,7 @@ A Dockerized Symfony mini-application where visitors can submit and browse publi
 - PHPUnit 11, PHPStan level 8, and PHP-CS-Fixer
 - Docker Compose with Nginx and PHP-FPM
 
-The application is a modular monolith. See [ARCHITECTURE.md](ARCHITECTURE.md) for requirements, interfaces, data flow, design decisions, and deep dives. See [SCALING.md](SCALING.md) for possible evolution under higher load.
+The application is a small structured monolith. See [ARCHITECTURE.md](ARCHITECTURE.md) for requirements, interfaces, data flow, design decisions, and deep dives. See [SCALING.md](SCALING.md) for possible evolution under higher load.
 
 ## Requirements
 
@@ -196,6 +196,56 @@ src/
 ├── Repository/    Persistence, search, and aggregate queries
 └── Service/       Submission orchestration and spam rules
 ```
+
+### Architectural scope and evolution at scale
+
+The project intentionally uses Symfony's familiar layer-oriented structure. It contains one cohesive review capability and was designed for a 4–6-hour assignment, so introducing several nested architectural layers would add navigation and maintenance cost without creating a meaningful module boundary.
+
+In a larger production modular monolith, the code would evolve toward business-capability modules instead of global technical folders. A possible high-level structure would be:
+
+```text
+src/
+├── Review/
+│   ├── Domain/
+│   │   ├── Entity/
+│   │   │   └── Review.php
+│   │   ├── ValueObject/
+│   │   │   └── Rating.php
+│   │   └── Exception/
+│   ├── Application/
+│   │   ├── Command/
+│   │   ├── Query/
+│   │   ├── Dto/
+│   │   └── Service/
+│   ├── Infrastructure/
+│   │   ├── Persistence/
+│   │   │   └── DoctrineReviewRepository.php
+│   │   └── Spam/
+│   └── Presentation/
+│       ├── Controller/
+│       ├── Form/
+│       └── ReadModel/
+├── Company/
+│   ├── Domain/
+│   ├── Application/
+│   ├── Infrastructure/
+│   └── Presentation/
+└── Shared/
+```
+
+Each module would own its business rules and persistence details and expose a small application-level API to other modules. Dependency direction could be enforced with tools such as Deptrac or PHPStan rules. `Shared` would remain deliberately small rather than becoming a general-purpose dumping ground.
+
+At real Trustindex scale, structural changes would be accompanied by data and operational changes:
+
+- Introduce canonical `Company` and `ReviewSource` models instead of grouping by free-text company names.
+- Paginate review feeds and use cursor-based pagination for consistently large datasets.
+- Cache popular company summaries and move expensive aggregates to summary tables or asynchronously refreshed materialized views when measurements justify it.
+- Process moderation, notifications, imports, and aggregate refreshes asynchronously through Symfony Messenger, backed by a transactional outbox where delivery reliability matters.
+- Move rate-limit and session state to Redis so multiple PHP instances share the same limits and state.
+- Add read replicas for read-heavy traffic and a dedicated search engine only when PostgreSQL search no longer meets measured requirements.
+- Keep PHP instances stateless, run controlled migrations during deployment, and add metrics for latency, errors, slow queries, and moderation outcomes without logging private review data.
+
+This evolution should be driven by measured load, real business boundaries, and team ownership. Merely moving the current classes into deeper directories would not create either a modular or a scalable architecture. The detailed progression and tradeoffs are documented in [SCALING.md](SCALING.md).
 
 ## Final verification checklist
 

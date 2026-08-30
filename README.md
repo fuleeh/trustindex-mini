@@ -1,6 +1,6 @@
-# Trustindex Review Mini-Application
+# Trustindex-mini
 
-A Symfony application where visitors can submit and browse public company reviews, compare company-level review statistics, and search by company name.
+A Dockerized Symfony mini-application where visitors can submit and browse public company reviews, compare company-level statistics, and search by company name. The public interface is mobile-first and presented in Hungarian to match the assignment.
 
 ## Features
 
@@ -8,6 +8,8 @@ A Symfony application where visitors can submit and browse public company review
 - Public review list and detail pages
 - Company review counts and average ratings, sorted highest first
 - Case-insensitive company search
+- Mobile-first Hungarian user interface
+- Deterministic development fixtures for manual evaluation
 - CSRF protection, honeypot and keyword spam detection, and submission rate limiting
 - Private handling of author email addresses
 - PostgreSQL-backed integration and functional tests
@@ -47,6 +49,12 @@ No host PHP, Composer, PostgreSQL, Node.js, or Symfony CLI installation is requi
    ```
 
 4. Open <http://localhost:8080>.
+
+Optionally replace the empty development database with representative sample reviews:
+
+```bash
+make db-fixtures
+```
 
 `make init` creates `.env` automatically when it is absent, but copying it explicitly makes the configuration step visible. Real environment files are ignored by Git; only `.env.example` is committed.
 
@@ -113,6 +121,14 @@ Validate mapping and schema synchronization:
 make db-validate
 ```
 
+Load deterministic sample reviews for manual browser testing:
+
+```bash
+make db-fixtures
+```
+
+This command purges the current development database before loading the samples. It is intended only for disposable local data and must not be used in production. The sample set exercises company search, review details, truncated text, and company statistics with different averages.
+
 The PostgreSQL initialization script creates an isolated `app_test` database on a fresh volume. For an existing volume, create it idempotently with:
 
 ```bash
@@ -169,6 +185,7 @@ The suite contains pure unit tests, PostgreSQL repository integration tests for 
 ```text
 src/
 ├── Controller/    HTTP request and response handling
+├── DataFixtures/  Deterministic development sample data
 ├── Dto/           Validated form input
 ├── Entity/        Doctrine persistence model
 ├── Exception/     Submission rejection signal
@@ -230,7 +247,7 @@ Run the following from the project root before submission.
    curl -I "http://localhost:8080/search?q=acme"
    ```
 
-6. In a browser, verify valid and invalid submissions, the exact success message, stars, truncation, details, company ordering, case-insensitive search, spam rejection, and absence of public author emails.
+6. In a browser, verify valid and invalid submissions, the exact `Köszönjük a véleményed!` success message, responsive layout, stars, truncation, details, company ordering, case-insensitive search, spam rejection, and absence of public author emails.
 
 7. Confirm the repository is clean:
 
@@ -241,19 +258,19 @@ Run the following from the project root before submission.
 
    `git status --short` should produce no output after the final commit.
 
-## Munkanapló
+## Work log
 
 The following records the active AI-assisted design and implementation session. Review/discussion time is included in the relevant phase; unattended build time is not expanded into estimates.
 
-| Dátum | Feladat | Ráfordított idő |
+| Date | Task | Time spent |
 | --- | --- | ---: |
-| 2026-08-30 | Fázis 0 – Követelmények és architektúra | 15 perc |
-| 2026-08-30 | Fázis 1 – Symfony/Docker setup és tooling | 15 perc |
-| 2026-08-30 | Fázis 2 – Entitás, repository és migráció | 12 perc |
-| 2026-08-30 | Fázis 3 – DTO, service és spamvédelem | 3 perc |
-| 2026-08-30 | Fázis 4 – Controller, Twig és UI | 7 perc |
-| 2026-08-30 | Fázis 5 – Unit, integration és functional tesztek | 5 perc |
-| 2026-08-30 | Fázis 6 – Dokumentáció és végső ellenőrzés | 2 perc |
-| **Összesen** |  | **59 perc** |
+| 2026-08-30 | Phase 0 – Requirements and architecture | 15 minutes |
+| 2026-08-30 | Phase 1 – Symfony/Docker setup and tooling | 15 minutes |
+| 2026-08-30 | Phase 2 – Entity, repository, and migration | 12 minutes |
+| 2026-08-30 | Phase 3 – DTO, service, and spam protection | 3 minutes |
+| 2026-08-30 | Phase 4 – Controller, Twig, and UI | 7 minutes |
+| 2026-08-30 | Phase 5 – Unit, integration, and functional tests | 5 minutes |
+| 2026-08-30 | Phase 6 – Documentation and final verification | 2 minutes |
+| **Total** |  | **59 minutes** |
 
 These values should be adjusted if additional manual review, testing, or refinement time is spent before submission.

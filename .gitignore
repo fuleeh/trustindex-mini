@@ -39,6 +39,10 @@ Thumbs.db
 /.docker/
 ###< local runtime data ###
 
+###> local working notes ###
+/INTERVIEW_GUIDE.md
+###< local working notes ###
+
 ###> credentials and keys ###
 *.pem
 *.key

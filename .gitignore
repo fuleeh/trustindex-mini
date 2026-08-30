@@ -1,0 +1,59 @@
+###> system/editor files ###
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
+*.swp
+*.swo
+###< system/editor files ###
+
+###> symfony/framework-bundle ###
+/.env
+/.env.*
+!/.env.example
+/.env.local
+/.env.local.php
+/.env.*.local
+/config/secrets/prod/prod.decrypt.private.php
+/public/bundles/
+/var/
+/vendor/
+###< symfony/framework-bundle ###
+
+###> symfony/phpunit-bridge ###
+/.phpunit.cache/
+/phpunit.xml
+###< symfony/phpunit-bridge ###
+
+###> doctrine/doctrine-bundle ###
+/.phpunit.result.cache
+###< doctrine/doctrine-bundle ###
+
+###> quality tools ###
+/.php-cs-fixer.cache
+/.phpstan.cache
+###< quality tools ###
+
+###> local runtime data ###
+/docker/postgres-data/
+/.docker/
+###< local runtime data ###
+
+###> credentials and keys ###
+*.pem
+*.key
+*.crt
+*.p12
+*.pfx
+/auth.json
+###< credentials and keys ###
+
+###> friendsofphp/php-cs-fixer ###
+/.php-cs-fixer.php
+/.php-cs-fixer.cache
+###< friendsofphp/php-cs-fixer ###
+
+###> phpunit/phpunit ###
+/phpunit.xml
+/.phpunit.cache/
+###< phpunit/phpunit ###

@@ -1,0 +1,14 @@
+.git
+.idea
+.vscode
+.DS_Store
+.env.local
+.env.*.local
+auth.json
+docker/postgres-data
+var
+vendor
+*.key
+*.pem
+*.p12
+*.pfx

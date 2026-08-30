@@ -188,6 +188,7 @@ src/
 ├── DataFixtures/  Deterministic development sample data
 ├── Dto/           Validated form input
 ├── Entity/        Doctrine persistence model
+├── Enum/          Typed classification outcomes
 ├── Exception/     Submission rejection signal
 ├── Form/          Symfony form definition
 ├── Mapper/        Input-to-entity conversion

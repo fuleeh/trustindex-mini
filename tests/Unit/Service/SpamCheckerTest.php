@@ -5,8 +5,8 @@ declare(strict_types=1);
 namespace App\Tests\Unit\Service;
 
 use App\Dto\ReviewInputDto;
+use App\Enum\SpamCheckResult;
 use App\Service\SpamChecker;
-use App\Service\SpamCheckResult;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 

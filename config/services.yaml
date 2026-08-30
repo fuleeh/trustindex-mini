@@ -27,6 +27,7 @@ services:
         exclude:
             - '../src/Dto/'
             - '../src/Entity/'
+            - '../src/Enum/'
             - '../src/Exception/'
             - '../src/ReadModel/'
             - '../src/Kernel.php'

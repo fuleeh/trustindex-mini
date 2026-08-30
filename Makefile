@@ -2,7 +2,7 @@ DOCKER_COMPOSE := docker compose
 PHP := $(DOCKER_COMPOSE) run --rm php
 PHP_TEST := $(DOCKER_COMPOSE) run --rm -e APP_ENV=test -e APP_DEBUG=1 php
 
-.PHONY: init env up down build shell composer-install db-create db-migrate db-diff db-validate test-db-create test-cache-clear test cache-warmup phpstan cs-fix cs-check code-quality
+.PHONY: init env up down build shell composer-install db-create db-migrate db-diff db-validate db-fixtures test-db-create test-cache-clear test cache-warmup phpstan cs-fix cs-check code-quality
 
 init: env build up composer-install db-create db-migrate
 
@@ -35,6 +35,10 @@ db-diff:
 
 db-validate:
 	$(PHP) php bin/console doctrine:schema:validate
+
+db-fixtures:
+	@echo "WARNING: replacing all data in the development database with sample reviews."
+	$(PHP) php bin/console doctrine:fixtures:load --no-interaction
 
 test-db-create:
 	$(PHP_TEST) php bin/console doctrine:database:create --if-not-exists

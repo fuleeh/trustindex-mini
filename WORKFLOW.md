@@ -57,12 +57,12 @@ Suggested commit: `chore: scaffold Symfony application and Docker tooling`
 
 ## Phase 2 — Persistence and query model
 
-- [ ] Create attribute-mapped `Review`: generated ID, company name, rating, text, author email, and automatic immutable timestamps.
-- [ ] Create `ReviewRepository` with case-insensitive company search and database-side `COUNT`/`AVG` grouped by company.
-- [ ] Order statistics by average descending and add deterministic secondary ordering.
-- [ ] Return aggregates as a typed `CompanyStats` read model where practical.
-- [ ] Add indexes justified by implemented queries.
-- [ ] Generate and inspect a Doctrine migration, run it on PostgreSQL, and validate the schema.
+- [x] Create attribute-mapped `Review`: generated ID, company name, rating, text, author email, and automatic immutable timestamps.
+- [x] Create `ReviewRepository` with case-insensitive company search and database-side `COUNT`/`AVG` grouped by company.
+- [x] Order statistics by average descending and add deterministic secondary ordering.
+- [x] Return aggregates as a typed `CompanyStats` read model where practical.
+- [x] Add indexes justified by implemented queries.
+- [x] Generate and inspect a Doctrine migration, run it on PostgreSQL, and validate the schema.
 
 Suggested commit: `feat: add review persistence and company statistics`
 

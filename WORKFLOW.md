@@ -7,13 +7,14 @@ This is the implementation plan for the Trustindex Medior PHP Developer test. Th
 - Start from a new Symfony 7.4 project.
 - Run PHP, Composer, Console, tests, and quality tools in Docker; host PHP is not assumed.
 - Use PHP 8.2+, Nginx, PHP-FPM, and PostgreSQL 16 with Docker Compose.
-- Use a conventional Symfony modular monolith. Add abstractions only for concrete responsibilities.
+- Use a conventional layer-oriented Symfony structured monolith for this single-feature scope. Document feature-first modular evolution for real production scale without reorganizing the assignment speculatively.
 - Bind forms to an input DTO, not directly to the Doctrine entity.
 - Keep query logic in the concrete `ReviewRepository`; no speculative repository interface.
 - Coordinate submission and abuse checks in a small application service.
-- Use English for code/docs, preserving required Hungarian UI text and `Munkanapló`.
+- Use English for code and repository documentation. Keep the complete public UI in Hungarian, including the exact required success message. Keep the README work log in English.
 - Every PHP file uses strict types. PHPStan level 8, PHPUnit, and PHP-CS-Fixer are gates.
-- Log actual time in README as each phase ends; never invent it afterward.
+- Log actual time in README as each phase ends; never invent it afterward. Update the total after final manual review.
+- Keep `INTERVIEW_GUIDE.md` as ignored local preparation material; do not include it in the submitted repository.
 - Never weaken a test or quality gate simply to make it pass.
 
 ## Scope
@@ -28,7 +29,7 @@ Non-goals: authentication, review editing/deletion, moderation UI or stored mode
 
 Work in the logical phases below. The user owns all Git commits; the coding agent must never create a commit. After each completed logical step, the agent must:
 
-1. Run phase-appropriate tests and every available quality gate.
+1. Ask the user to run PHPUnit, PHPStan, and PHP-CS-Fixer manually at meaningful checkpoints. The agent may run lightweight targeted syntax or diagnostic checks but should not spend tokens rerunning full gates unless requested.
 2. Report results, deviations, and meaningful defaults.
 3. Suggest a commit message for the user.
 4. Continue only after the user has had an opportunity to review the step.
@@ -57,7 +58,7 @@ Suggested commit: `chore: scaffold Symfony application and Docker tooling`
 
 ## Phase 2 — Persistence and query model
 
-- [x] Create attribute-mapped `Review`: generated ID, company name, rating, text, author email, and automatic immutable timestamps.
+- [x] Create attribute-mapped `Review`: generated ID, company name, rating, text, author email, and automatic timestamps.
 - [x] Create `ReviewRepository` with case-insensitive company search and database-side `COUNT`/`AVG` grouped by company.
 - [x] Order statistics by average descending and add deterministic secondary ordering.
 - [x] Return aggregates as a typed `CompanyStats` read model where practical.
@@ -95,8 +96,10 @@ Suggested commit: `feat: add validated review submission and abuse protection`
 - [x] Use POST/Redirect/GET and the exact success flash `Köszönjük a véleményed!`.
 - [x] Provide useful validation, generic spam, and rate-limit feedback; surface HTTP 429 semantics where compatible with the form flow.
 - [x] Add a shared Twig layout and responsive list, detail, companies, and search pages.
+- [x] Present all public UI and server-side validation feedback consistently in Hungarian.
 - [x] Keep Twig auto-escaping enabled and never render author email.
 - [x] Use Bootstrap or small local CSS; avoid unnecessary frontend build complexity.
+- [x] Add deterministic Hungarian development fixtures, including long reviews that exercise list truncation and detail rendering.
 
 Suggested commit: `feat: add review pages, search, and star rating UI`
 
@@ -105,14 +108,15 @@ Suggested commit: `feat: add review pages, search, and star rating UI`
 - [x] Unit-test pure entity and spam-classification rules.
 - [x] Integration-test repository averages, counts, descending order, and tie ordering using known database records.
 - [x] Functional-test index, valid/invalid submission, flash message, spam rejection, statistics, detail, and search.
-- [ ] Confirm database isolation and run `php bin/phpunit` in Docker without errors.
-- [ ] Run PHPStan level 8, PHP-CS-Fixer check mode, and the combined `make code-quality` target.
+- [x] Confirm database isolation and run `php bin/phpunit` in Docker without errors.
+- [x] Run PHPStan level 8, PHP-CS-Fixer check mode, and the combined `make code-quality` target.
 
 Suggested commit: `test: cover review flows and aggregate ordering`
 
 ## Phase 6 — Documentation and final QA
 
-- [x] Write README: description, features, stack, Docker quick start, required Composer/Symfony/database/test commands, architecture summary, security decisions, and accurate `Munkanapló`.
+- [x] Write README: description, features, stack, Docker quick start, required Composer/Symfony/database/test commands, concise architecture and scaling summary, and work log.
+- [x] Update the README work-log durations with all later fixture, localization, UI, validation, review, and documentation work.
 - [x] Write `SCALING.md` from the deep dives, clearly separating current behavior from future options.
 - [ ] Rebuild from a clean Docker state, migrate, exercise browser flows, and run `make code-quality`.
 - [ ] Confirm only intended files are present and `main` is runnable.
@@ -121,11 +125,11 @@ Suggested commit: `docs: complete setup, work log, and scaling notes`
 
 ## Definition of done
 
-- [ ] All mandatory requirements and agreed bonuses work.
-- [ ] The Doctrine migration runs on PostgreSQL.
-- [ ] Unit, integration, and functional tests pass in Docker, explicitly covering average and ordering logic.
-- [ ] PHPStan level 8 and style checks pass.
-- [ ] Author email is stored but never displayed publicly.
-- [ ] README contains accurate commands and actual work time.
-- [ ] Architecture/scaling docs distinguish implemented design from future evolution.
+- [x] All mandatory requirements and agreed bonuses work.
+- [x] The Doctrine migration runs on PostgreSQL.
+- [x] Unit, integration, and functional tests pass in Docker, explicitly covering average and ordering logic.
+- [x] PHPStan level 8 and style checks pass.
+- [x] Author email is stored but never displayed publicly.
+- [x] README contains accurate commands and an explicitly approximate active-time work log.
+- [x] Architecture/scaling docs distinguish implemented design from future evolution.
 - [ ] Git history contains coherent, reviewed commits.

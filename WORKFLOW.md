@@ -68,13 +68,13 @@ Suggested commit: `feat: add review persistence and company statistics`
 
 ## Phase 3 — Submission and abuse controls
 
-- [ ] Add validated `ReviewInputDto`, including an unmapped honeypot value.
-- [ ] Add a focused DTO-to-entity mapper if it keeps orchestration concise.
-- [ ] Add an independently testable spam checker with honeypot and configurable case-insensitive keywords.
-- [ ] Configure Symfony Rate Limiter for submissions.
-- [ ] Add `ReviewService` to coordinate checks, mapping, and persistence.
-- [ ] Reject spam before persistence; do not add an undocumented status column.
-- [ ] Ensure author email is never exposed publicly.
+- [x] Add validated `ReviewInputDto`, including an unmapped honeypot value.
+- [x] Add a focused DTO-to-entity mapper if it keeps orchestration concise.
+- [x] Add an independently testable spam checker with honeypot and configurable case-insensitive keywords.
+- [x] Configure Symfony Rate Limiter for submissions.
+- [x] Add `ReviewService` to coordinate checks, mapping, and persistence.
+- [x] Reject spam before persistence; do not add an undocumented status column.
+- [x] Ensure author email is never exposed publicly.
 - [ ] Unit-test validation, spam rules, mapping, and service behavior where valuable.
 
 Suggested commit: `feat: add validated review submission and abuse protection`

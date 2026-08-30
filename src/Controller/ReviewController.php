@@ -112,6 +112,7 @@ final class ReviewController extends AbstractController
         return $this->createForm(ReviewType::class, $input ?? new ReviewInputDto(), [
             'action' => $this->generateUrl('review_submit'),
             'method' => 'POST',
+            'attr' => ['novalidate' => 'novalidate'],
         ]);
     }
 

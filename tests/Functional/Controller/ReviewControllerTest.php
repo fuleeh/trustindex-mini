@@ -67,6 +67,8 @@ final class ReviewControllerTest extends WebTestCase
         ]), serverParameters: ['REMOTE_ADDR' => '192.0.2.11']);
 
         self::assertResponseStatusCodeSame(Response::HTTP_UNPROCESSABLE_ENTITY);
+        self::assertSelectorTextContains('form', 'A cégnév megadása kötelező.');
+        self::assertSelectorTextContains('form', 'Adj meg egy érvényes e-mail-címet.');
         self::assertCount(0, $this->repository->findAll());
     }
 

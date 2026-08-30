@@ -112,8 +112,8 @@ Suggested commit: `test: cover review flows and aggregate ordering`
 
 ## Phase 6 — Documentation and final QA
 
-- [ ] Write README: description, features, stack, Docker quick start, required Composer/Symfony/database/test commands, architecture summary, security decisions, and accurate `Munkanapló`.
-- [ ] Write `SCALING.md` from the deep dives, clearly separating current behavior from future options.
+- [x] Write README: description, features, stack, Docker quick start, required Composer/Symfony/database/test commands, architecture summary, security decisions, and accurate `Munkanapló`.
+- [x] Write `SCALING.md` from the deep dives, clearly separating current behavior from future options.
 - [ ] Rebuild from a clean Docker state, migrate, exercise browser flows, and run `make code-quality`.
 - [ ] Confirm only intended files are present and `main` is runnable.
 

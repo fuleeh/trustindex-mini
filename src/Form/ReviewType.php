@@ -36,7 +36,7 @@ final class ReviewType extends AbstractType
             ])
             ->add('authorEmail', EmailType::class, [
                 'label' => 'Email address',
-                'help' => 'Your email is stored securely and is never shown publicly.',
+                'help' => 'Your email is stored with the review and is never shown publicly.',
                 'attr' => ['autocomplete' => 'email', 'maxlength' => 255],
             ])
             ->add('website', TextType::class, [

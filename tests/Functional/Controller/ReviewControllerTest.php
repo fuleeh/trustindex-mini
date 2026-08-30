@@ -85,13 +85,10 @@ final class ReviewControllerTest extends WebTestCase
         self::assertCount(0, $this->repository->findAll());
     }
 
-    public function testDetailCompaniesAndSearchPagesUsePersistedReviews(): void
+    public function testDetailPageShowsReviewWithoutExposingEmail(): void
     {
         $acme = new Review('Acme', 4, 'Detailed Acme feedback.', 'one@example.com');
-        $beta = new Review('Beta', 5, 'Detailed Beta feedback.', 'two@example.com');
-        $this->entityManager->persist($acme);
-        $this->entityManager->persist($beta);
-        $this->entityManager->flush();
+        $this->persistReviews($acme);
 
         self::assertNotNull($acme->getId());
         $this->client->request('GET', '/reviews/'.$acme->getId());
@@ -100,15 +97,40 @@ final class ReviewControllerTest extends WebTestCase
         $content = $this->client->getResponse()->getContent();
         self::assertIsString($content);
         self::assertStringNotContainsString('one@example.com', $content);
+    }
+
+    public function testCompaniesPageOrdersHighestAverageFirst(): void
+    {
+        $this->persistReviews(
+            new Review('Acme', 4, 'Detailed Acme feedback.', 'one@example.com'),
+            new Review('Beta', 5, 'Detailed Beta feedback.', 'two@example.com'),
+        );
 
         $this->client->request('GET', '/companies');
         self::assertResponseIsSuccessful();
         self::assertSelectorTextContains('tbody tr:first-child', 'Beta');
+    }
+
+    public function testSearchIsCaseInsensitiveAndFiltersOtherCompanies(): void
+    {
+        $this->persistReviews(
+            new Review('Acme', 4, 'Detailed Acme feedback.', 'one@example.com'),
+            new Review('Beta', 5, 'Detailed Beta feedback.', 'two@example.com'),
+        );
 
         $this->client->request('GET', '/search?q=acme');
         self::assertResponseIsSuccessful();
         self::assertSelectorTextContains('.review-card', 'Acme');
         self::assertSelectorTextNotContains('.card-list', 'Beta');
+    }
+
+    private function persistReviews(Review ...$reviews): void
+    {
+        foreach ($reviews as $review) {
+            $this->entityManager->persist($review);
+        }
+
+        $this->entityManager->flush();
     }
 
     /** @param array<string, string> $values */

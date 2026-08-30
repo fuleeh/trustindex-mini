@@ -42,6 +42,30 @@ final class ReviewRepositoryTest extends KernelTestCase
         self::assertSame([5.0, 4.0, 4.0], array_column($stats, 'averageRating'));
     }
 
+    public function testSearchTreatsLikeWildcardsAsLiteralCharacters(): void
+    {
+        $this->persistReviews(
+            new Review('Percent% Company', 5, 'Percent.', 'one@example.com'),
+            new Review('Under_score Company', 4, 'Underscore.', 'two@example.com'),
+            new Review('Ordinary Company', 3, 'Ordinary.', 'three@example.com'),
+        );
+
+        self::assertSame(
+            ['Percent% Company'],
+            array_map(
+                static fn (Review $review): string => $review->getCompanyName(),
+                $this->repository->searchByCompanyName('%'),
+            ),
+        );
+        self::assertSame(
+            ['Under_score Company'],
+            array_map(
+                static fn (Review $review): string => $review->getCompanyName(),
+                $this->repository->searchByCompanyName('_'),
+            ),
+        );
+    }
+
     private function persistReviews(Review ...$reviews): void
     {
         foreach ($reviews as $review) {

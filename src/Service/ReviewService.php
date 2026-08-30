@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace App\Service;
 
 use App\Dto\ReviewInputDto;
-use App\Entity\Review;
 use App\Exception\SpamDetectedException;
 use App\Mapper\ReviewMapper;
 use App\Repository\ReviewRepository;
@@ -19,17 +18,15 @@ final readonly class ReviewService
     ) {
     }
 
-    public function submit(ReviewInputDto $input): Review
+    public function submit(ReviewInputDto $input): void
     {
         $spamResult = $this->spamChecker->check($input);
 
         if ($spamResult->isSpam()) {
-            throw new SpamDetectedException($spamResult);
+            throw new SpamDetectedException();
         }
 
         $review = $this->reviewMapper->toEntity($input);
         $this->reviewRepository->save($review);
-
-        return $review;
     }
 }

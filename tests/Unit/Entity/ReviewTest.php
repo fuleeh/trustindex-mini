@@ -16,7 +16,6 @@ final class ReviewTest extends TestCase
         self::assertSame('Acme', $review->getCompanyName());
         self::assertSame(4, $review->getRating());
         self::assertSame('A useful review.', $review->getReviewText());
-        self::assertSame('author@example.com', $review->getAuthorEmail());
         self::assertEquals($review->getCreatedAt(), $review->getUpdatedAt());
     }
 

@@ -8,6 +8,7 @@ use App\Dto\ReviewInputDto;
 use App\Entity\Review;
 use App\Exception\SpamDetectedException;
 use App\Form\ReviewType;
+use App\Mapper\ReviewMapper;
 use App\Repository\ReviewRepository;
 use App\Service\ReviewService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -22,6 +23,7 @@ final class ReviewController extends AbstractController
     public function __construct(
         private readonly ReviewRepository $reviewRepository,
         private readonly ReviewService $reviewService,
+        private readonly ReviewMapper $reviewMapper,
         private readonly RateLimiterFactory $reviewSubmissionLimiter,
     ) {
     }
@@ -78,7 +80,9 @@ final class ReviewController extends AbstractController
             throw $this->createNotFoundException('Review not found.');
         }
 
-        return $this->render('review/detail.html.twig', ['review' => $review]);
+        return $this->render('review/detail.html.twig', [
+            'review' => $this->reviewMapper->toPublicReview($review),
+        ]);
     }
 
     #[Route('/companies', name: 'review_companies', methods: ['GET'])]
@@ -96,7 +100,9 @@ final class ReviewController extends AbstractController
 
         return $this->render('review/search.html.twig', [
             'query' => $query,
-            'reviews' => '' === $query ? [] : $this->reviewRepository->searchByCompanyName($query),
+            'reviews' => '' === $query
+                ? []
+                : $this->reviewMapper->toPublicReviews($this->reviewRepository->searchByCompanyName($query)),
         ]);
     }
 
@@ -114,7 +120,7 @@ final class ReviewController extends AbstractController
     {
         return $this->render('review/index.html.twig', [
             'reviewForm' => $form,
-            'reviews' => $this->reviewRepository->findAllNewestFirst(),
+            'reviews' => $this->reviewMapper->toPublicReviews($this->reviewRepository->findAllNewestFirst()),
         ], new Response(status: $status));
     }
 }

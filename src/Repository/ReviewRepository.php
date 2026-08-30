@@ -42,9 +42,11 @@ final class ReviewRepository extends ServiceEntityRepository
      */
     public function searchByCompanyName(string $query): array
     {
+        $query = str_replace(['!', '%', '_'], ['!!', '!%', '!_'], mb_strtolower(trim($query)));
+
         return $this->createQueryBuilder('review')
-            ->andWhere('LOWER(review.companyName) LIKE :query')
-            ->setParameter('query', '%'.mb_strtolower(trim($query)).'%')
+            ->andWhere("LOWER(review.companyName) LIKE :query ESCAPE '!'")
+            ->setParameter('query', '%'.$query.'%')
             ->orderBy('review.createdAt', 'DESC')
             ->addOrderBy('review.id', 'DESC')
             ->getQuery()

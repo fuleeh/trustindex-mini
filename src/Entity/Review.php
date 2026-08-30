@@ -10,7 +10,6 @@ use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: ReviewRepository::class)]
 #[ORM\Table(name: 'review')]
-#[ORM\Index(name: 'idx_review_company_name', columns: ['company_name'])]
 #[ORM\Index(name: 'idx_review_created_at', columns: ['created_at'])]
 #[ORM\HasLifecycleCallbacks]
 class Review
@@ -74,11 +73,6 @@ class Review
     public function getReviewText(): string
     {
         return $this->reviewText;
-    }
-
-    public function getAuthorEmail(): string
-    {
-        return $this->authorEmail;
     }
 
     public function getCreatedAt(): \DateTimeImmutable

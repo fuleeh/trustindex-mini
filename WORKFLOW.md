@@ -75,7 +75,7 @@ Suggested commit: `feat: add review persistence and company statistics`
 - [x] Add `ReviewService` to coordinate checks, mapping, and persistence.
 - [x] Reject spam before persistence; do not add an undocumented status column.
 - [x] Ensure author email is never exposed publicly.
-- [ ] Unit-test validation, spam rules, mapping, and service behavior where valuable.
+- [x] Unit-test pure entity and spam rules; cover validation and orchestration through functional tests.
 
 Suggested commit: `feat: add validated review submission and abuse protection`
 
@@ -102,9 +102,9 @@ Suggested commit: `feat: add review pages, search, and star rating UI`
 
 ## Phase 5 — Verification
 
-- [ ] Unit-test pure rules and focused service behavior.
-- [ ] Integration-test repository averages, counts, descending order, and tie ordering using known database records.
-- [ ] Functional-test index, valid/invalid submission, flash message, spam rejection, statistics, detail, and search.
+- [x] Unit-test pure entity and spam-classification rules.
+- [x] Integration-test repository averages, counts, descending order, and tie ordering using known database records.
+- [x] Functional-test index, valid/invalid submission, flash message, spam rejection, statistics, detail, and search.
 - [ ] Confirm database isolation and run `php bin/phpunit` in Docker without errors.
 - [ ] Run PHPStan level 8, PHP-CS-Fixer check mode, and the combined `make code-quality` target.
 

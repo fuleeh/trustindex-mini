@@ -1,7 +1,7 @@
 DOCKER_COMPOSE := docker compose
 PHP := $(DOCKER_COMPOSE) run --rm php
 
-.PHONY: init env up down build shell composer-install db-create db-migrate db-diff db-validate test phpstan cs-fix cs-check code-quality
+.PHONY: init env up down build shell composer-install db-create db-migrate db-diff db-validate test-db-create test phpstan cs-fix cs-check code-quality
 
 init: env build up composer-install db-create db-migrate
 
@@ -35,7 +35,10 @@ db-diff:
 db-validate:
 	$(PHP) php bin/console doctrine:schema:validate
 
-test:
+test-db-create:
+	$(PHP) php bin/console doctrine:database:create --env=test --if-not-exists
+
+test: test-db-create
 	$(PHP) php bin/phpunit
 
 phpstan:

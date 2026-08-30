@@ -43,6 +43,7 @@ services:
       start_period: 5s
     volumes:
       - database_data:/var/lib/postgresql/data
+      - ./docker/postgres/init-test-database.sh:/docker-entrypoint-initdb.d/init-test-database.sh:ro
 
 volumes:
   database_data:

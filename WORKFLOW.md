@@ -81,8 +81,8 @@ Suggested commit: `feat: add validated review submission and abuse protection`
 
 ## Phase 4 — HTTP interface and UI
 
-- [ ] Add CSRF-protected `ReviewType` bound to the input DTO, with accessible star-style rating radios.
-- [ ] Implement:
+- [x] Add CSRF-protected `ReviewType` bound to the input DTO, with accessible star-style rating radios.
+- [x] Implement:
 
   | Method | Route | Purpose |
   | --- | --- | --- |
@@ -92,11 +92,11 @@ Suggested commit: `feat: add validated review submission and abuse protection`
   | `GET` | `/companies` | Company aggregates |
   | `GET` | `/search?q=...` | Company search |
 
-- [ ] Use POST/Redirect/GET and the exact success flash `Köszönjük a véleményed!`.
-- [ ] Provide useful validation, generic spam, and rate-limit feedback; surface HTTP 429 semantics where compatible with the form flow.
-- [ ] Add a shared Twig layout and responsive list, detail, companies, and search pages.
-- [ ] Keep Twig auto-escaping enabled and never render author email.
-- [ ] Use Bootstrap or small local CSS; avoid unnecessary frontend build complexity.
+- [x] Use POST/Redirect/GET and the exact success flash `Köszönjük a véleményed!`.
+- [x] Provide useful validation, generic spam, and rate-limit feedback; surface HTTP 429 semantics where compatible with the form flow.
+- [x] Add a shared Twig layout and responsive list, detail, companies, and search pages.
+- [x] Keep Twig auto-escaping enabled and never render author email.
+- [x] Use Bootstrap or small local CSS; avoid unnecessary frontend build complexity.
 
 Suggested commit: `feat: add review pages, search, and star rating UI`
 

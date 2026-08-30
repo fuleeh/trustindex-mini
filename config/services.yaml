@@ -37,5 +37,9 @@ services:
 
     App\Service\SpamCheckerInterface: '@App\Service\SpamChecker'
 
+    App\Controller\ReviewController:
+        arguments:
+            $reviewSubmissionLimiter: '@limiter.review_submission'
+
     # add more service definitions when explicit configuration is needed
     # please note that last definitions always *replace* previous ones

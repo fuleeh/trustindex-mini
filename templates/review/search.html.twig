@@ -1,0 +1,25 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Search reviews · Trustindex{% endblock %}
+
+{% block body %}
+    <section class="page-heading">
+        <p class="eyebrow">Find a company</p>
+        <h1>Search reviews</h1>
+        <form class="search-form" action="{{ path('review_search') }}" method="get" role="search">
+            <label class="sr-only" for="company-search">Company name</label>
+            <input id="company-search" type="search" name="q" value="{{ query }}" maxlength="255" placeholder="Search by company name" required>
+            <button class="button" type="submit">Search</button>
+        </form>
+    </section>
+    {% if query %}
+        <div class="section-heading"><h2>Results for “{{ query }}”</h2><span>{{ reviews|length }} found</span></div>
+        <div class="card-list">
+            {% for review in reviews %}
+                {% include 'review/_review_card.html.twig' with {review: review} only %}
+            {% else %}
+                <div class="empty-state">No reviews matched this company name.</div>
+            {% endfor %}
+        </div>
+    {% endif %}
+{% endblock %}

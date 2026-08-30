@@ -1,0 +1,11 @@
+<article class="card review-card">
+    <div class="card-heading">
+        <div>
+            <h3><a href="{{ path('review_detail', {id: review.id}) }}">{{ review.companyName }}</a></h3>
+            {% include 'review/_stars.html.twig' with {rating: review.rating} only %}
+        </div>
+        <time datetime="{{ review.createdAt|date('c') }}">{{ review.createdAt|date('M j, Y') }}</time>
+    </div>
+    <p>{{ review.reviewText|slice(0, 220) }}{% if review.reviewText|length > 220 %}…{% endif %}</p>
+    <a class="text-link" href="{{ path('review_detail', {id: review.id}) }}">Read full review</a>
+</article>

@@ -1,0 +1,28 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Company rankings · Trustindex{% endblock %}
+
+{% block body %}
+    <section class="page-heading">
+        <p class="eyebrow">At a glance</p>
+        <h1>Company rankings</h1>
+        <p class="lead">Companies ordered by their average customer rating.</p>
+    </section>
+    <div class="card table-card"><div class="table-scroll"><table>
+        <thead><tr><th scope="col">Company</th><th scope="col">Reviews</th><th scope="col">Average rating</th></tr></thead>
+        <tbody>
+            {% for company in companies %}
+                <tr>
+                    <th scope="row">{{ company.companyName }}</th>
+                    <td>{{ company.reviewCount }}</td>
+                    <td>
+                        {% include 'review/_stars.html.twig' with {rating: company.averageRating|round} only %}
+                        <span class="rating-number">{{ company.averageRating|number_format(2) }}</span>
+                    </td>
+                </tr>
+            {% else %}
+                <tr><td colspan="3">No company statistics are available yet.</td></tr>
+            {% endfor %}
+        </tbody>
+    </table></div></div>
+{% endblock %}

@@ -1,7 +1,8 @@
 DOCKER_COMPOSE := docker compose
 PHP := $(DOCKER_COMPOSE) run --rm php
+PHP_TEST := $(DOCKER_COMPOSE) run --rm -e APP_ENV=test -e APP_DEBUG=1 php
 
-.PHONY: init env up down build shell composer-install db-create db-migrate db-diff db-validate test-db-create test phpstan cs-fix cs-check code-quality
+.PHONY: init env up down build shell composer-install db-create db-migrate db-diff db-validate test-db-create test-cache-clear test cache-warmup phpstan cs-fix cs-check code-quality
 
 init: env build up composer-install db-create db-migrate
 
@@ -36,12 +37,18 @@ db-validate:
 	$(PHP) php bin/console doctrine:schema:validate
 
 test-db-create:
-	$(PHP) php bin/console doctrine:database:create --env=test --if-not-exists
+	$(PHP_TEST) php bin/console doctrine:database:create --if-not-exists
 
-test: test-db-create
-	$(PHP) php bin/phpunit
+test-cache-clear:
+	$(PHP_TEST) php bin/console cache:clear
 
-phpstan:
+test: test-db-create test-cache-clear
+	$(PHP_TEST) php bin/phpunit
+
+cache-warmup:
+	$(PHP) php bin/console cache:clear --env=dev
+
+phpstan: cache-warmup
 	$(PHP) vendor/bin/phpstan analyse --memory-limit=512M
 
 cs-fix:

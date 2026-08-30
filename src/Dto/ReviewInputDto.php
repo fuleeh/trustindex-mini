@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace App\Dto;
 
-use LogicException;
 use Symfony\Component\Validator\Constraints as Assert;
 
 final class ReviewInputDto
@@ -31,21 +30,21 @@ final class ReviewInputDto
 
     public function requireCompanyName(): string
     {
-        return $this->companyName ?? throw new LogicException('Company name has not been validated.');
+        return $this->companyName ?? throw new \LogicException('Company name has not been validated.');
     }
 
     public function requireRating(): int
     {
-        return $this->rating ?? throw new LogicException('Rating has not been validated.');
+        return $this->rating ?? throw new \LogicException('Rating has not been validated.');
     }
 
     public function requireReviewText(): string
     {
-        return $this->reviewText ?? throw new LogicException('Review text has not been validated.');
+        return $this->reviewText ?? throw new \LogicException('Review text has not been validated.');
     }
 
     public function requireAuthorEmail(): string
     {
-        return $this->authorEmail ?? throw new LogicException('Author email has not been validated.');
+        return $this->authorEmail ?? throw new \LogicException('Author email has not been validated.');
     }
 }

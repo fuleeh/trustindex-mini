@@ -179,6 +179,68 @@ src/
 └── Service/       Submission orchestration and spam rules
 ```
 
+## Final verification checklist
+
+Run the following from the project root before submission.
+
+1. Prepare local configuration if needed, then build and start the stack:
+
+   ```bash
+   cp .env.example .env
+   # Replace the placeholders; POSTGRES_PASSWORD and DB_PASSWORD must match.
+   docker compose config --quiet
+   make build
+   make up
+   docker compose ps
+   ```
+
+2. Validate dependencies and check published security advisories:
+
+   ```bash
+   make composer-install
+   docker compose exec -T php composer validate --strict
+   docker compose exec -T php composer audit --locked
+   ```
+
+3. Verify database creation, migrations, and schema:
+
+   ```bash
+   make db-create
+   make db-migrate
+   make db-validate
+   make test-db-create
+   docker compose exec -T php php bin/console doctrine:migrations:status
+   ```
+
+4. Run each quality gate:
+
+   ```bash
+   make test
+   make phpstan
+   make cs-check
+   ```
+
+   The equivalent combined command is `make code-quality`. Do not run `make cs-fix` during final verification unless modifying files is intentional.
+
+5. Smoke-test public HTTP routes:
+
+   ```bash
+   curl -I http://localhost:8080/
+   curl -I http://localhost:8080/companies
+   curl -I "http://localhost:8080/search?q=acme"
+   ```
+
+6. In a browser, verify valid and invalid submissions, the exact success message, stars, truncation, details, company ordering, case-insensitive search, spam rejection, and absence of public author emails.
+
+7. Confirm the repository is clean:
+
+   ```bash
+   git status --short
+   git log --oneline --decorate
+   ```
+
+   `git status --short` should produce no output after the final commit.
+
 ## Munkanapló
 
 The following records the active AI-assisted design and implementation session. Review/discussion time is included in the relevant phase; unattended build time is not expanded into estimates.

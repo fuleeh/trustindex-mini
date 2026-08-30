@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace App\Tests\Unit\Entity;
 
 use App\Entity\Review;
-use InvalidArgumentException;
 use PHPUnit\Framework\TestCase;
 
 final class ReviewTest extends TestCase
@@ -23,7 +22,7 @@ final class ReviewTest extends TestCase
 
     public function testRatingOutsideAllowedRangeIsRejected(): void
     {
-        $this->expectException(InvalidArgumentException::class);
+        $this->expectException(\InvalidArgumentException::class);
 
         new Review('Acme', 6, 'Invalid rating.', 'author@example.com');
     }

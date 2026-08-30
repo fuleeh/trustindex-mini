@@ -7,7 +7,6 @@ namespace App\Entity;
 use App\Repository\ReviewRepository;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
-use InvalidArgumentException;
 
 #[ORM\Entity(repositoryClass: ReviewRepository::class)]
 #[ORM\Table(name: 'review')]
@@ -46,7 +45,7 @@ class Review
         string $authorEmail,
     ) {
         if ($rating < 1 || $rating > 5) {
-            throw new InvalidArgumentException('Rating must be between 1 and 5.');
+            throw new \InvalidArgumentException('Rating must be between 1 and 5.');
         }
 
         $this->companyName = $companyName;

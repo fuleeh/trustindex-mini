@@ -100,6 +100,7 @@ final class ReviewController extends AbstractController
         ]);
     }
 
+    /** @return FormInterface<ReviewInputDto> */
     private function createReviewForm(?ReviewInputDto $input = null): FormInterface
     {
         return $this->createForm(ReviewType::class, $input ?? new ReviewInputDto(), [
@@ -108,6 +109,7 @@ final class ReviewController extends AbstractController
         ]);
     }
 
+    /** @param FormInterface<ReviewInputDto> $form */
     private function renderIndex(FormInterface $form, int $status = Response::HTTP_OK): Response
     {
         return $this->render('review/index.html.twig', [

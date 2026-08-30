@@ -51,7 +51,9 @@ final class ReviewControllerTest extends WebTestCase
         $this->client->followRedirect();
         self::assertSelectorTextContains('.alert-success', 'Köszönjük a véleményed!');
         self::assertSelectorTextContains('.review-card', 'Acme');
-        self::assertStringNotContainsString('private@example.com', $this->client->getResponse()->getContent() ?? '');
+        $content = $this->client->getResponse()->getContent();
+        self::assertIsString($content);
+        self::assertStringNotContainsString('private@example.com', $content);
         self::assertCount(1, $this->repository->findAll());
     }
 
@@ -95,7 +97,9 @@ final class ReviewControllerTest extends WebTestCase
         $this->client->request('GET', '/reviews/'.$acme->getId());
         self::assertResponseIsSuccessful();
         self::assertSelectorTextContains('.review-body', 'Detailed Acme feedback.');
-        self::assertStringNotContainsString('one@example.com', $this->client->getResponse()->getContent() ?? '');
+        $content = $this->client->getResponse()->getContent();
+        self::assertIsString($content);
+        self::assertStringNotContainsString('one@example.com', $content);
 
         $this->client->request('GET', '/companies');
         self::assertResponseIsSuccessful();

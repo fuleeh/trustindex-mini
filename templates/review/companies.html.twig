@@ -1,15 +1,15 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Company rankings · Trustindex{% endblock %}
+{% block title %}Cégek rangsora · Trustindex-mini{% endblock %}
 
 {% block body %}
-    <section class="page-heading">
-        <p class="eyebrow">At a glance</p>
-        <h1>Company rankings</h1>
-        <p class="lead">Companies ordered by their average customer rating.</p>
+    <section class="page-heading inner-hero">
+        <p class="eyebrow">// gyors áttekintés</p>
+        <h1>Cégek rangsora</h1>
+        <p class="lead">Cégek az átlagos ügyfélértékelésük szerint rendezve.</p>
     </section>
     <div class="card table-card"><div class="table-scroll"><table>
-        <thead><tr><th scope="col">Company</th><th scope="col">Reviews</th><th scope="col">Average rating</th></tr></thead>
+        <thead><tr><th scope="col">Cég</th><th scope="col">Vélemények</th><th scope="col">Átlagos értékelés</th></tr></thead>
         <tbody>
             {% for company in companies %}
                 <tr>
@@ -21,7 +21,7 @@
                     </td>
                 </tr>
             {% else %}
-                <tr><td colspan="3">No company statistics are available yet.</td></tr>
+                <tr><td colspan="3">Még nem érhető el cégstatisztika.</td></tr>
             {% endfor %}
         </tbody>
     </table></div></div>

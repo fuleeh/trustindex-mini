@@ -1,42 +1,43 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Company reviews · Trustindex{% endblock %}
+{% block title %}Trustindex-mini · Cégértékelések{% endblock %}
 
 {% block body %}
     <section class="hero">
-        <div>
-            <p class="eyebrow">Shared experiences</p>
-            <h1>Make your next decision with confidence.</h1>
-            <p class="lead">Browse honest company reviews or add your own experience.</p>
+        <p class="eyebrow">// közösségi cégértékelések</p>
+        <h1>Valódi tapasztalatok.<br>Jobb döntések.</h1>
+        <p class="lead">Olvasd el mások tapasztalatait, vagy oszd meg a sajátodat egy cégről.</p>
+        <div class="hero-actions">
+            <a class="button" href="#review-form-heading">Írj véleményt</a>
+            <a class="button button-secondary" href="{{ path('review_companies') }}">Cégstatisztikák</a>
         </div>
-        <a class="button button-secondary" href="{{ path('review_companies') }}">Compare companies</a>
     </section>
 
     <div class="content-grid">
         <section aria-labelledby="reviews-heading">
             <div class="section-heading">
-                <div><p class="eyebrow">Latest feedback</p><h2 id="reviews-heading">Recent reviews</h2></div>
-                <a class="text-link" href="{{ path('review_search') }}">Search reviews</a>
+                <div><p class="eyebrow">// {{ reviews|length }} vélemény</p><h2 id="reviews-heading">Legújabb vélemények</h2></div>
+                <a class="text-link" href="{{ path('review_search') }}">Vélemények keresése</a>
             </div>
             <div class="card-list">
                 {% for review in reviews %}
                     {% include 'review/_review_card.html.twig' with {review: review} only %}
                 {% else %}
-                    <div class="empty-state">No reviews yet. Be the first to share an experience.</div>
+                    <div class="empty-state">Még nincs vélemény. Oszd meg elsőként a tapasztalatodat!</div>
                 {% endfor %}
             </div>
         </section>
 
         <aside class="card form-card" aria-labelledby="review-form-heading">
-            <p class="eyebrow">Add your voice</p>
-            <h2 id="review-form-heading">Write a review</h2>
+            <p class="eyebrow">// mondd el a véleményed</p>
+            <h2 id="review-form-heading">Írj véleményt</h2>
             {{ form_start(reviewForm) }}
                 {{ form_row(reviewForm.companyName) }}
                 {{ form_row(reviewForm.rating) }}
                 {{ form_row(reviewForm.reviewText) }}
                 {{ form_row(reviewForm.authorEmail) }}
                 {{ form_row(reviewForm.website) }}
-                <button class="button" type="submit">Submit review</button>
+                <button class="button" type="submit">Vélemény beküldése</button>
             {{ form_end(reviewForm) }}
         </aside>
     </div>

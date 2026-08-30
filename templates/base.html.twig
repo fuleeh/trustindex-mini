@@ -1,20 +1,20 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="hu">
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <meta name="description" content="Read and share trusted company reviews.">
-        <title>{% block title %}Trustindex Reviews{% endblock %}</title>
-        <link rel="stylesheet" href="/styles/app.css">
+        <meta name="description" content="Olvass és ossz meg hiteles cégértékeléseket.">
+        <title>{% block title %}Trustindex-mini{% endblock %}</title>
+        <link rel="stylesheet" href="/styles/app.css?v=3">
     </head>
     <body>
         <header class="site-header">
-            <nav class="container nav" aria-label="Main navigation">
-                <a class="brand" href="{{ path('review_index') }}">Trustindex Reviews</a>
+            <nav class="container nav" aria-label="Fő navigáció">
+                <a class="brand" href="{{ path('review_index') }}">Trustindex-mini</a>
                 <div class="nav-links">
-                    <a href="{{ path('review_index') }}">Reviews</a>
-                    <a href="{{ path('review_companies') }}">Companies</a>
-                    <a href="{{ path('review_search') }}">Search</a>
+                    <a href="{{ path('review_index') }}">Vélemények</a>
+                    <a href="{{ path('review_companies') }}">Cégek</a>
+                    <a href="{{ path('review_search') }}">Keresés</a>
                 </div>
             </nav>
         </header>
@@ -26,6 +26,6 @@
             {% endfor %}
             {% block body %}{% endblock %}
         </main>
-        <footer class="site-footer"><div class="container">Company reviews, kept simple.</div></footer>
+        <footer class="site-footer"><div class="container"><span class="footer-mark">Trustindex-mini</span><span>Cégértékelések egyszerűen.</span></div></footer>
     </body>
 </html>

@@ -42,7 +42,7 @@ final class ReviewController extends AbstractController
             ->consume();
 
         if (!$limit->isAccepted()) {
-            $this->addFlash('warning', 'Too many review attempts. Please wait a minute and try again.');
+            $this->addFlash('warning', 'Túl sok beküldési kísérlet történt. Kérjük, várj egy percet, majd próbáld újra.');
             $response = $this->renderIndex($this->createReviewForm(), Response::HTTP_TOO_MANY_REQUESTS);
             $retryAfter = $limit->getRetryAfter();
             $response->headers->set('Retry-After', (string) max(1, $retryAfter->getTimestamp() - time()));
@@ -61,7 +61,7 @@ final class ReviewController extends AbstractController
         try {
             $this->reviewService->submit($input);
         } catch (SpamDetectedException) {
-            $this->addFlash('warning', 'Your review could not be accepted. Please check it and try again.');
+            $this->addFlash('warning', 'A véleményedet nem tudtuk elfogadni. Ellenőrizd, majd próbáld újra.');
 
             return $this->redirectToRoute('review_index', status: Response::HTTP_SEE_OTHER);
         }
@@ -77,7 +77,7 @@ final class ReviewController extends AbstractController
         $review = $this->reviewRepository->find($id);
 
         if (!$review instanceof Review) {
-            throw $this->createNotFoundException('Review not found.');
+            throw $this->createNotFoundException('A vélemény nem található.');
         }
 
         return $this->render('review/detail.html.twig', [

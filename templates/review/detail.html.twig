@@ -1,14 +1,14 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}{{ review.companyName }} review · Trustindex{% endblock %}
+{% block title %}{{ review.companyName }} vélemény · Trustindex-mini{% endblock %}
 
 {% block body %}
-    <a class="back-link" href="{{ path('review_index') }}">← Back to reviews</a>
+    <a class="back-link" href="{{ path('review_index') }}">← Vissza a véleményekhez</a>
     <article class="card detail-card">
-        <p class="eyebrow">Company review</p>
+        <p class="eyebrow">// cégértékelés</p>
         <h1>{{ review.companyName }}</h1>
         {% include 'review/_stars.html.twig' with {rating: review.rating} only %}
         <p class="review-body">{{ review.reviewText|nl2br }}</p>
-        <time datetime="{{ review.createdAt|date('c') }}">Published {{ review.createdAt|date('F j, Y') }}</time>
+        <time datetime="{{ review.createdAt|date('c') }}">Közzétéve: {{ review.createdAt|date('Y. m. d.') }}</time>
     </article>
 {% endblock %}

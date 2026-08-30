@@ -8,22 +8,22 @@ use Symfony\Component\Validator\Constraints as Assert;
 
 final class ReviewInputDto
 {
-    #[Assert\NotBlank]
-    #[Assert\Length(max: 255)]
+    #[Assert\NotBlank(message: 'A cégnév megadása kötelező.')]
+    #[Assert\Length(max: 255, maxMessage: 'A cégnév legfeljebb {{ limit }} karakter lehet.')]
     public ?string $companyName = null;
 
-    #[Assert\NotBlank]
-    #[Assert\Type('integer')]
-    #[Assert\Range(min: 1, max: 5)]
+    #[Assert\NotBlank(message: 'Az értékelés megadása kötelező.')]
+    #[Assert\Type(type: 'integer', message: 'Az értékelésnek egész számnak kell lennie.')]
+    #[Assert\Range(min: 1, max: 5, notInRangeMessage: 'Az értékelésnek {{ min }} és {{ max }} között kell lennie.')]
     public ?int $rating = null;
 
-    #[Assert\NotBlank]
-    #[Assert\Length(max: 5000)]
+    #[Assert\NotBlank(message: 'A vélemény megadása kötelező.')]
+    #[Assert\Length(max: 5000, maxMessage: 'A vélemény legfeljebb {{ limit }} karakter lehet.')]
     public ?string $reviewText = null;
 
-    #[Assert\NotBlank]
-    #[Assert\Email]
-    #[Assert\Length(max: 255)]
+    #[Assert\NotBlank(message: 'Az e-mail-cím megadása kötelező.')]
+    #[Assert\Email(message: 'Adj meg egy érvényes e-mail-címet.')]
+    #[Assert\Length(max: 255, maxMessage: 'Az e-mail-cím legfeljebb {{ limit }} karakter lehet.')]
     public ?string $authorEmail = null;
 
     public ?string $website = null;

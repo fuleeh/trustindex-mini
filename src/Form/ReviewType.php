@@ -20,27 +20,27 @@ final class ReviewType extends AbstractType
     {
         $builder
             ->add('companyName', TextType::class, [
-                'label' => 'Company name',
+                'label' => 'Cégnév',
                 'attr' => ['autocomplete' => 'organization', 'maxlength' => 255],
             ])
             ->add('rating', ChoiceType::class, [
-                'label' => 'Rating',
+                'label' => 'Értékelés',
                 'choices' => ['★' => 1, '★★' => 2, '★★★' => 3, '★★★★' => 4, '★★★★★' => 5],
                 'expanded' => true,
                 'multiple' => false,
                 'row_attr' => ['class' => 'form-row rating-field'],
             ])
             ->add('reviewText', TextareaType::class, [
-                'label' => 'Your review',
+                'label' => 'Véleményed',
                 'attr' => ['maxlength' => 5000, 'rows' => 6],
             ])
             ->add('authorEmail', EmailType::class, [
-                'label' => 'Email address',
-                'help' => 'Your email is stored with the review and is never shown publicly.',
+                'label' => 'E-mail-cím',
+                'help' => 'Az e-mail-címedet eltároljuk a véleménnyel, de nyilvánosan soha nem jelenítjük meg.',
                 'attr' => ['autocomplete' => 'email', 'maxlength' => 255],
             ])
             ->add('website', TextType::class, [
-                'label' => 'Website',
+                'label' => 'Weboldal',
                 'required' => false,
                 'row_attr' => ['class' => 'honeypot', 'aria-hidden' => 'true'],
                 'attr' => ['autocomplete' => 'off', 'tabindex' => '-1'],

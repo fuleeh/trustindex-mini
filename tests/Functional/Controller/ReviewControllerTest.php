@@ -34,7 +34,7 @@ final class ReviewControllerTest extends WebTestCase
         $this->client->request('GET', '/');
 
         self::assertResponseIsSuccessful();
-        self::assertSelectorTextContains('h1', 'Make your next decision with confidence.');
+        self::assertSelectorTextContains('h1', 'Dönts magabiztosan mások tapasztalatai alapján.');
         self::assertSelectorExists('form[name="review"]');
     }
 
@@ -138,6 +138,6 @@ final class ReviewControllerTest extends WebTestCase
     {
         $crawler = $this->client->request('GET', '/');
 
-        return $crawler->selectButton('Submit review')->form($values);
+        return $crawler->selectButton('Vélemény beküldése')->form($values);
     }
 }
